@@ -4,32 +4,49 @@ const game = {
     smallestNum: 1,
     secretNum: null,
     prevGuesses: [],
-    getGuess: function(){
-        do {
-            //guess = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
-            //guess=parseInt(guess)
-            guess == this.secretNum
-
-            console.log(typeof guess)
-            if (typeof guess !== "string"){
-                console.log("Number works")
-                this.prevGuesses.push(guess)
-            } else {
-                console.log("Enter a number!")
-            }
-        } while (guess !== this.secretNum)
     
+    getGuess: function () {
+        let guess = null;
+  
+        do {
+            guess = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum} (with secret number ${this.secretNum})`)
+            guess = parseInt(guess)
+            if (isNaN(guess)){
+                alert("Enter a number!")
+            } else if(guess <this.smallestNum || guess > this.biggestNum){
+                alert("Enter a number within the range!")
+            }
+        } while (isNaN (guess) || guess < this.smallestNum || guess > this.biggestNum)
+        return guess
     },
+    
+     play: function(){
+         this.secretNum = Math.floor(Math.random()*
+             (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+        let guess 
+        do {
+            guess = this.getGuess()
+            this.prevGuesses.push(guess)
+            this.render(guess)
+        } while (guess !== this.secretNum)
+        
+        alert("Yay!")
+        
+     },
 
-    play: function(){
-        this.secretNum = Math.floor(Math.random()*
-            (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
-        console.log(this.secretNum)
-        this.getGuess()
-        console.log(this.prevGuesses)     
-
+    render: function(guessIn){
+        if (guessIn !== parseInt(this.secretNum)){
+            guessIn < this.secretNum ? alert(`Your guess is too low. Previous guesses: ${this.prevGuesses.join(', ')}`) : alert(`Your guess is too high. Previous guesses: ${this.prevGuesses.join(' , ')}`)
+        } else {
+        alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries!`)
+        }
+        
+        return guessIn
+        }
     }
-}
+
+
+ 
 
 game.play()
 
