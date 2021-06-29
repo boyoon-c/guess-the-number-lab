@@ -35,7 +35,7 @@ const game = {
      },
 
     render: function(guessIn){
-        if (guessIn !== parseInt(this.secretNum)){
+        if (guessIn !== this.secretNum){
             guessIn < this.secretNum ? alert(`Your guess is too low. Previous guesses: ${this.prevGuesses.join(', ')}`) : alert(`Your guess is too high. Previous guesses: ${this.prevGuesses.join(' , ')}`)
         } else {
         alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries!`)
